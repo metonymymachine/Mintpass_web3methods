@@ -61,12 +61,12 @@ export const onboard = Onboard({
 });
 
 const contractABI = abi;
-const contractAddress = "0x019f5629A978bdcB6e26Dc164f5922508703f63c";
+const contractAddress = "0x37fe16671BC5bE118287bd146f147D2534e46ee2";
 
 const theContract = new web3.eth.Contract(contractABI, contractAddress);
 
-const publicprice  = "15000000000000000";
-const presaleprice = "00000000000000000";
+const publicprice = "100000000000000000";
+const presaleprice = "10000000000000000";
 
 const loadCurrentSupply = async () => {
   const supply = await theContract.methods.getCurrentId().call();
@@ -134,7 +134,34 @@ export const connectWallet = async () => {
   await onboard.walletSelect();
   await onboard.walletCheck();
 
-  $(".metamask-button-text").text('Mint');
+  //don't need this in public sale to check whitelist
+
+  //check if user address if whitelisted alse display a message
+  let addr = keccak256(
+   web3.utils.toChecksumAddress(onboard.getState().address)
+  );
+  let proof = merkleTree.getHexProof(addr);
+
+  if (proof.length == 0) {
+    $(".whitelist-alert").text(
+      "Sorry, your wallet is not whitelisted for the pre-sale. The public sale starts on December 23rd"
+    );
+    $(".whitlist-check").hide();
+  }
+
+  if (proof.length > 0) {
+    $(".whitelist-alert").text(
+      "Your wallet is whitelisted for the pre-sale. You can mint up to 3 x Bobos."
+    );
+    $(".whitlist-check").hide();
+  }
+
+  //window.alert(onboard.getState().address);
+  $(".metamask-button-text").text(
+    `Connected (${onboard.getState().address.substring(0, 2)}...${onboard
+      .getState()
+      .address.slice(onboard.getState().address.length - 2)})`
+  );
   $(".alert").hide();
   //hide please connect wallet text
   $(".test-metamask-button").text(`${onboard.getState().address}`);
@@ -179,12 +206,23 @@ export const getCurrentWalletConnected = async () => {
 export const mintPresale = async (amount) => {
   //check if onboard address is empty then connect wallet
   if (onboard.getState().address) {
+    //grab the connected address
+    //convert to checkum format
+    //apply keccak256
+    //return as a claiming address to find the proof
+    const claimingAddress = keccak256(
+      web3.utils.toChecksumAddress(onboard.getState().address)
+    );
+
+    //get the root for the whitelisted address
+    const hexProof = merkleTree.getHexProof(claimingAddress);
+
     //  window.contract = new web3.eth.Contract(contractABI, contractAddress);
     const transactionParameters = {
       from: onboard.getState().address,
       to: contractAddress,
       value: web3.utils.toHex(presaleprice * amount),
-      data: theContract.methods.mintPresale(amount).encodeABI(),
+      data: theContract.methods.mintPresale(amount, hexProof).encodeABI(),
     };
     try {
       const txHash = await window.ethereum.request({
@@ -213,6 +251,57 @@ export const mintPresale = async (amount) => {
     connectWallet();
 
     console.log("connecting wallet...");
+  }
+};
+
+//bunle price minting
+export const mintBundlePrice = async (amount) => {
+  if (onboard.getState().address) {
+    //grab the connected address
+    //convert to checkum format
+    //apply keccak256
+    //return as a claiming address to find the proof
+    const claimingAddress = keccak256(
+      web3.utils.toChecksumAddress(onboard.getState().address)
+    );
+
+    //get the root for the whitelisted address
+    const hexProof = merkleTree.getHexProof(claimingAddress);
+    //custom bundle price for 3 bobos
+    let bundlePrice = "100000000000000000";
+    //  window.contract = new web3.eth.Contract(contractABI, contractAddress);
+    const transactionParameters = {
+      from: onboard.getState().address,
+      to: contractAddress,
+      value: web3.utils.toHex(bundlePrice),
+      data: theContract.methods.mintPresale(amount, hexProof).encodeABI(),
+    };
+    try {
+      const txHash = await window.ethereum.request({
+        method: "eth_sendTransaction",
+        params: [transactionParameters],
+      });
+      $(".alert").show();
+      $(".alert").text("The transaction is initiated. You can view it here: ");
+      $(".alert").append(
+        `<a href='https://etherscan.io/tx/${txHash}' target='_blank'>Etherscan</a>`
+      );
+    } catch (error) {
+      if (error.code == 4001) {
+        $(".alert").show();
+        console.log(error.message);
+        $(".alert").text(`The transaction was aborted`);
+      } else {
+        $(".alert").show();
+        console.log(error.message);
+        //open wallet to connect automatically if not connected
+        connectWallet();
+        $(".alert").text(`Please connect a wallet first, To mint a Bobo`);
+      }
+    }
+  } else {
+    //if user isn't connect - connect wallet.
+    connectWallet();
   }
 };
 
@@ -252,7 +341,7 @@ export const mintPublic = async (amount) => {
     //if user isn't connect - connect wallet.
     connectWallet();
     //hide the connect wallet alert
-    $(".alert").hide();
+    $('.alert').hide();
   }
 };
 

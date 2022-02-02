@@ -154,6 +154,13 @@ export const abi = [
   },
   {
     inputs: [],
+    name: "getPresalePrice",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "getPrice",
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
@@ -187,7 +194,10 @@ export const abi = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "uint256", name: "mintCount", type: "uint256" }],
+    inputs: [
+      { internalType: "uint256", name: "mintCount", type: "uint256" },
+      { internalType: "bytes32[]", name: "proof", type: "bytes32[]" },
+    ],
     name: "mintPresale",
     outputs: [],
     stateMutability: "payable",
@@ -297,8 +307,10 @@ export const abi = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "uint256", name: "supply", type: "uint256" }],
-    name: "setPresaleSupply",
+    inputs: [
+      { internalType: "uint256", name: "presaleprice", type: "uint256" },
+    ],
+    name: "setPresalePrice",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
