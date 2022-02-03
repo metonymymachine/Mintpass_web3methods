@@ -61,12 +61,12 @@ export const onboard = Onboard({
 });
 
 const contractABI = abi;
-const contractAddress = "0x37fe16671BC5bE118287bd146f147D2534e46ee2";
+const contractAddress = "0x73AF8134139E12f23BAFa4505Bc59EbAaA621B93";
 
 const theContract = new web3.eth.Contract(contractABI, contractAddress);
 
 const publicprice = "100000000000000000";
-const presaleprice = "10000000000000000";
+const presaleprice = "65000000000000000";
 
 const loadCurrentSupply = async () => {
   const supply = await theContract.methods.getCurrentId().call();
