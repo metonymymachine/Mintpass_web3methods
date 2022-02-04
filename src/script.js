@@ -17,7 +17,7 @@ let web;
 const FORTMATIC_KEY = "pk_live_7CFC103369096AD4";
 const PORTIS_KEY = "Your Portis key here";
 const INFURA_KEY = "5b3b303e5c124bdfb7029389b1a0d599";
-const APP_URL = "https://www.bobocomics.xyz";
+const APP_URL = "https://everynft.me";
 const CONTACT_EMAIL = "dev@metonymy-machine.com";
 const RPC_URL = `https://mainnet.infura.io/v3/${INFURA_KEY}`;
 const APP_NAME = "onboardjs";
@@ -61,7 +61,7 @@ export const onboard = Onboard({
 });
 
 const contractABI = abi;
-const contractAddress = "0x73AF8134139E12f23BAFa4505Bc59EbAaA621B93";
+const contractAddress = "0x6540a57cBb52d4A3d99c103Fb130732495803561";
 
 const theContract = new web3.eth.Contract(contractABI, contractAddress);
 
