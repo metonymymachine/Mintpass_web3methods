@@ -144,14 +144,14 @@ export const connectWallet = async () => {
 
   if (proof.length == 0) {
     $(".whitelist-alert").text(
-      "Sorry, your wallet is not whitelisted for the pre-sale. The public sale starts on December 23rd"
+      "Unfortunately you are not eligible for the pre-sale"
     );
     $(".whitlist-check").hide();
   }
 
   if (proof.length > 0) {
     $(".whitelist-alert").text(
-      "Your wallet is whitelisted for the pre-sale. You can mint up to 3 x Bobos."
+      "You are eligible for the pre-sale. You can mint max. 3 x Mintpasses per wallet"
     );
     $(".whitlist-check").hide();
   }
@@ -199,7 +199,7 @@ export const getCurrentWalletConnected = async () => {
       $(".alert").text(`${err.message}`);
     }
   } else {
-    $(".alert").text("Please connect a wallet");
+    $(".alert").text("Please connect your ETH wallet");
   }
 };
 
@@ -230,7 +230,7 @@ export const mintPresale = async (amount) => {
         params: [transactionParameters],
       });
       $(".alert").show();
-      $(".alert").text("The transaction is initiated. You can view it here: ");
+      $(".alert").text("Please click here to view your transaction on ");
       $(".alert").append(
         `<a href='https://etherscan.io/tx/${txHash}' target='_blank'>Etherscan</a>`
       );
@@ -244,7 +244,7 @@ export const mintPresale = async (amount) => {
         //open wallet to connect automatically if not connected
         connectWallet();
         console.log(error.message);
-        $(".alert").text(`Please connect a wallet first, To mint a Bobo`);
+        $(".alert").text(`Please connect your ETH wallet`);
       }
     }
   } else {
@@ -282,7 +282,7 @@ export const mintBundlePrice = async (amount) => {
         params: [transactionParameters],
       });
       $(".alert").show();
-      $(".alert").text("The transaction is initiated. You can view it here: ");
+      $(".alert").text("Please click here to view your transaction on ");
       $(".alert").append(
         `<a href='https://etherscan.io/tx/${txHash}' target='_blank'>Etherscan</a>`
       );
@@ -296,7 +296,7 @@ export const mintBundlePrice = async (amount) => {
         console.log(error.message);
         //open wallet to connect automatically if not connected
         connectWallet();
-        $(".alert").text(`Please connect a wallet first, To mint a Bobo`);
+        $(".alert").text(`Please connect your ETH wallet`);
       }
     }
   } else {
@@ -334,7 +334,7 @@ export const mintPublic = async (amount) => {
         console.log(error.message);
         //open wallet to connect automatically if not connected
         connectWallet();
-        $(".alert").text(`Please connect a wallet first, To mint a Bobo`);
+        $(".alert").text(`Please connect your ETH wallet`);
       }
     }
   } else {
@@ -444,11 +444,11 @@ export const addWalletListener = () => {
         // }, 2000);
         // console.log(useraddress);
       } else {
-        $(".alert").text("Please connect a wallet");
+        $(".alert").text("Please connect your ETH wallet");
       }
     });
   } else {
-    $(".alert").text("Please connect a wallet");
+    $(".alert").text("Please connect your ETH wallet");
   }
 };
 
