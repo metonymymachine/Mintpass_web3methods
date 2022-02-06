@@ -138,7 +138,7 @@ export const connectWallet = async () => {
 
   //check if user address if whitelisted alse display a message
   let addr = keccak256(
-   web3.utils.toChecksumAddress(onboard.getState().address)
+    web3.utils.toChecksumAddress(onboard.getState().address)
   );
   let proof = merkleTree.getHexProof(addr);
 
@@ -151,7 +151,7 @@ export const connectWallet = async () => {
 
   if (proof.length > 0) {
     $(".whitelist-alert").text(
-      "You are eligible for the pre-sale. You can mint max. 3 x Mintpasses per wallet"
+      "You are eligible to mint 2 x Mintpasses. You can hold a maximum of 5 x Mintpasses per wallet"
     );
     $(".whitlist-check").hide();
   }
@@ -229,9 +229,11 @@ export const mintPresale = async (amount) => {
         method: "eth_sendTransaction",
         params: [transactionParameters],
       });
-      $(".alert").show();
-      $(".alert").text("Please click here to view your transaction on ");
-      $(".alert").append(
+      $(".whitlist-alert").show();
+      $(".whitlist-alert").text(
+        "Please click here to view your transaction on "
+      );
+      $(".whitlist-alert").append(
         `<a href='https://etherscan.io/tx/${txHash}' target='_blank'>Etherscan</a>`
       );
     } catch (error) {
@@ -281,9 +283,11 @@ export const mintBundlePrice = async (amount) => {
         method: "eth_sendTransaction",
         params: [transactionParameters],
       });
-      $(".alert").show();
-      $(".alert").text("Please click here to view your transaction on ");
-      $(".alert").append(
+      $(".whitlist-alert").show();
+      $(".whitlist-alert").text(
+        "Please click here to view your transaction on "
+      );
+      $(".whitlist-alert").append(
         `<a href='https://etherscan.io/tx/${txHash}' target='_blank'>Etherscan</a>`
       );
     } catch (error) {
@@ -341,7 +345,7 @@ export const mintPublic = async (amount) => {
     //if user isn't connect - connect wallet.
     connectWallet();
     //hide the connect wallet alert
-    $('.alert').hide();
+    $(".alert").hide();
   }
 };
 
@@ -469,27 +473,3 @@ if (window.ethereum) {
     }
   });
 }
-
-//show the whitelist alert
-const whitListAlert = () => {
-  //check the whitlist of account
-  //check if user address if whitelisted alse display a message
-  let addr = keccak256(
-    web3.utils.toChecksumAddress(onboard.getState().address)
-  );
-  let proof = merkleTree.getHexProof(addr);
-
-  if (proof.length == 0) {
-    $(".whitelist-alert").text(
-      "Sorry, your wallet is not whitelisted for the pre-sale. The public sale starts on December 23rd"
-    );
-    $(".whitlist-check").hide();
-  }
-
-  if (proof.length > 0) {
-    $(".whitelist-alert").text(
-      "Your wallet is whitelisted for the pre-sale. You can mint up to 3 x Bobos."
-    );
-    $(".whitlist-check").hide();
-  }
-};
