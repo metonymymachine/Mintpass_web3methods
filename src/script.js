@@ -230,10 +230,10 @@ export const mintPresale = async (amount) => {
         params: [transactionParameters],
       });
       $(".whitlist-alert").show();
-      $(".whitlist-alert").text(
+      $(".whitelist-alert").text(
         "Please click here to view your transaction on "
       );
-      $(".whitlist-alert").append(
+      $(".whitliste-alert").append(
         `<a href='https://etherscan.io/tx/${txHash}' target='_blank'>Etherscan</a>`
       );
     } catch (error) {
