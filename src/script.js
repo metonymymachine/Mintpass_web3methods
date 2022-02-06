@@ -233,7 +233,7 @@ export const mintPresale = async (amount) => {
       $(".whitelist-alert").text(
         "Please click here to view your transaction on "
       );
-      $(".whitliste-alert").append(
+      $(".whiteliste-alert").append(
         `<a href='https://etherscan.io/tx/${txHash}' target='_blank'>Etherscan</a>`
       );
     } catch (error) {
