@@ -9,7 +9,7 @@ const { MerkleTree } = require("merkletreejs");
 const keccak256 = require("keccak256");
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
 const web3 = createAlchemyWeb3(
-  "wss://eth-rinkeby.alchemyapi.io/v2/jteXmFElZcQhvSIuZckM-3c9AA-_CrcC"
+  "wss://eth-mainnet.alchemyapi.io/v2/jteXmFElZcQhvSIuZckM-3c9AA-_CrcC"
 );
 let web;
 
@@ -61,7 +61,7 @@ export const onboard = Onboard({
 });
 
 const contractABI = abi;
-const contractAddress = "0x6540a57cBb52d4A3d99c103Fb130732495803561";
+const contractAddress = "0xcB5E2e44b4d9e7ED003B295dF7a5FDF072e3D858";
 
 const theContract = new web3.eth.Contract(contractABI, contractAddress);
 
