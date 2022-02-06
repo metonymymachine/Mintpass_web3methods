@@ -14,6 +14,9 @@ module.exports.addresses = [
   "0x56A0cBD181220816452c61DAe800F1fbB7E55260", // Whitelist 1 below
   //mintpass addresses below
   // Mintpass whitelist below
+  "0xd68Dfd5EdE689AD41C27135DA0E1F21F2Ff956fE",
+  "0x74ebc1b70ae83aba1305d22f0aa05c9d846efc1b",
+  "0x049FC344775b1A8E8c6e0AB5aC78566883A583f0",
   "0x1CF9c22B77e2f620f49Cfffabd4CfAE2074d76fe",
   "0xc51c5bc02b543D91fd96cC364993Fe91ccE46930",
   "0x2D228b99318c60E673c4f3BaEC7e714827Db0b30",
